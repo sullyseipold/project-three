@@ -1,2 +1,10 @@
 node_modules/
 .DS_Store
+scripts/seedDB.js
+client/build/static/js/main.6a7b2f93.chunk.js.map
+client/build/static/js/main.6a7b2f93.chunk.js
+client/build/static/js/2.4d4d1d51.chunk.js.map
+client/build/static/css/main.0779e1df.chunk.css.map
+client/build/static/css/main.0779e1df.chunk.css
+client/build/static/js/2.4d4d1d51.chunk.js
+client/build/static/js/runtime~main.a8a9905a.js

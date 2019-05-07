@@ -3,20 +3,22 @@ module.exports = (sequelize, DataTypes) => {
   const Timesheet = sequelize.define('Timesheet', {
     startdate: DataTypes.DATE,
     enddate: DataTypes.DATE
-  }, 
-  {});
-  Timesheet.associate = function(models) {
+  }, {
+    sequelize,
+    modelName: 'timesheet'
+  });
 
-    hasMany(models.Activity, {
-      onDelete: "CASCADE",
+  Timesheet.associate = function (models) {
 
-      // Get info about Activity -
-      foreinKey: {
-        allowNull: false
-      }
-
+    belongsTo(models.User, {
+      as: 'timesheet',
+      foreignKey: 'timesheet_id'
+    });
+    hasMany(models.Category, {
+      allowNull: false,
+      foreignKey: 'category_id'
     })
-    // associations can be defined here
+
   };
-  return Timesheet;
+return Timesheet;
 };

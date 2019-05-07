@@ -6,31 +6,47 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lastName: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      validate: {
+        isEmail: true
+      }
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false
+      type: DataTypes.STRING
     },
-  }, {
-    classMethods: {
-      associate: function (models) {
 
-
-        // Associate with timesheet
-        User.hasMany(models.Activity, {
-          onDelete: "CASCADE",
-          foreignKey: {
-            allowNull: false
-          }
-        });
-      }
+    userType: {
+      type: DataTypes.BOOLEAN,
+      // is employee if true. upon login, db searches emails in 'users' table if to see if id is associated with emplpyee or admin
+      defaultValue: true
     }
+
+  }, {
+    sequelize,
+    modelName: 'user'
   });
+  User.associate = function (models) {
+
+    hasOne(models.Timesheet, {
+      onDelete: "CASCADE",
+      hooks: true,
+      foreignKey: 
+      // 'timesheet_id'
+      {
+        allowNull: false
+      }
+    });
+  };
+  //  {
+  //   classMethods: {
+  //     associate: function (models) {
+
+  //       User.hasOne(models.Timesheet);
+  //     }
+  //   }
+  // });
   return User;
 };

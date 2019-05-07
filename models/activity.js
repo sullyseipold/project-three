@@ -7,14 +7,27 @@ module.exports = (sequelize, DataTypes) => {
     // category recording options (reg hours, overtime, holiday, etc)
     category: {
       type: DataTypes.STRING,
-      allowNull: false,
-    }
-    
-  }, {});
-  Activity.associate = function(models) {
+      references: {
+        model: Category,
+        key: 'id'
+      }
+    },
 
-    // associations can be defined here
-    // belongs to timesheet? employee?
+  }, {
+    sequelize,
+    modelName: 'activity'
+  });
+  Activity.associate = function (models) {
+
+    hasOne(models.Category, {
+      onDelete: "CASCADE",
+      hooks: true,
+      foreignKey: {
+        allowNull: false
+      }
+    });
+
+
   };
   return Activity;
 };
