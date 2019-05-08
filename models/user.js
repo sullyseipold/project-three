@@ -18,10 +18,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING
     },
 
+    // boss or employee
     userType: {
-      type: DataTypes.BOOLEAN,
-      // is employee if true. upon login, db searches emails in 'users' table if to see if id is associated with emplpyee or admin
-      defaultValue: true
+      type: DataTypes.STRING,
+      values: {
+        employee: "Employee",
+        boss: "Boss"
+      },
+      // default user status is employee
+      defaultValue: "Employee",
+      allowNull: true
     }
 
   }, {
@@ -40,13 +46,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     });
   };
-  //  {
-  //   classMethods: {
-  //     associate: function (models) {
-
-  //       User.hasOne(models.Timesheet);
-  //     }
-  //   }
-  // });
   return User;
 };

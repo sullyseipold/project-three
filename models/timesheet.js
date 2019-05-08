@@ -14,9 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       as: 'timesheet',
       foreignKey: 'timesheet_id'
     });
-    hasMany(models.Category, {
+    hasMany(models.Activity, {
       allowNull: false,
-      foreignKey: 'category_id'
+      foreignKey: 'activity_id'
     })
 
   };

@@ -1,16 +1,22 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Activity = sequelize.define('Activity', {
+
     starttime: DataTypes.DATE,
     endtime: DataTypes.DATE,
 
     // category recording options (reg hours, overtime, holiday, etc)
     category: {
       type: DataTypes.STRING,
-      references: {
-        model: Category,
-        key: 'id'
-      }
+      values: {
+        regHours: "Regular Hours",
+        ot: "Overtime",
+        hol: "Holiday",
+        misc: "Other"
+
+      },
+      defaultValue: regHours,
+      allowNull: true
     },
 
   }, {
@@ -19,9 +25,10 @@ module.exports = (sequelize, DataTypes) => {
   });
   Activity.associate = function (models) {
 
-    hasOne(models.Category, {
+    belongsTo(models.Timesheet, {
+
       onDelete: "CASCADE",
-      hooks: true,
+      // hooks: true,
       foreignKey: {
         allowNull: false
       }
