@@ -1,21 +1,46 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+
+    // get full name
+    getterMethods: {
+      fullName: function () {
+        return this.firstName + ' ' + this.lastName
+      }
     },
-    lastName: {
-      type: DataTypes.STRING
+
+    setterMethods: {
+      fullName: function (value) {
+        var names = value.split(' ');
+
+        this.setDataValue('firstName', names.slice(0, -1).join(' '));
+        this.setDataValue('lastName', names.slice(-1).join(' '));
+      },
     },
+
+
     email: {
       type: DataTypes.STRING,
       validate: {
         isEmail: true
       }
     },
+
     password: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+
+      // security measures
+      // must contain a number, an uppercase letter, a lowercase letter, and be between 5-15 chars long
+      validate: {
+        isDecimal: true,          // checks for any numbers
+        isUppercase: true,        // checks for uppercase
+        isLowercase: true,        // checks for lowercase
+        len: [5,15],              // only allow values with length between 5 and 15
+        notNull: true,            // won't allow null
+
+      }
     },
 
     // boss or employee
@@ -26,8 +51,10 @@ module.exports = (sequelize, DataTypes) => {
         boss: "Boss"
       },
       // default user status is employee
-      defaultValue: "Employee",
-      allowNull: true
+      defaultValue: employee,
+
+      // needed to determine UI so cannot be false
+      allowNull: false
     }
 
   }, {
@@ -36,13 +63,13 @@ module.exports = (sequelize, DataTypes) => {
   });
   User.associate = function (models) {
 
+    // has timesheet which is identified by its fk
     hasOne(models.Timesheet, {
-      onDelete: "CASCADE",
-      hooks: true,
-      foreignKey: 
-      // 'timesheet_id'
+
+      foreignKey:
+      // 'timesheet_id',
       {
-        allowNull: false
+        allowNull: true
       }
     });
   };
