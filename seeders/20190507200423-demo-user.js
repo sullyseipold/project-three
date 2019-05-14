@@ -10,7 +10,8 @@ module.exports = {
         email: 'demo@gmail.com',
         createdAt: new Date(),
         updatedAt: new Date(),
-        password: 'demopassword'
+        password: '666Coder666',
+        userType: "Employee"
       }], {});
   },
 

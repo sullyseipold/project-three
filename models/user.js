@@ -5,20 +5,20 @@ module.exports = (sequelize, DataTypes) => {
     lastName: DataTypes.STRING,
 
     // get full name
-    getterMethods: {
-      fullName: function () {
-        return this.firstName + ' ' + this.lastName
-      }
-    },
+    // getterMethods: {
+    //   fullName: function () {
+    //     return this.firstName + ' ' + this.lastName
+    //   }
+    // },
 
-    setterMethods: {
-      fullName: function (value) {
-        var names = value.split(' ');
+    // setterMethods: {
+    //   fullName: function (value) {
+    //     var names = value.split(' ');
 
-        this.setDataValue('firstName', names.slice(0, -1).join(' '));
-        this.setDataValue('lastName', names.slice(-1).join(' '));
-      },
-    },
+    //     this.setDataValue('firstName', names.slice(0, -1).join(' '));
+    //     this.setDataValue('lastName', names.slice(-1).join(' '));
+    //   },
+    // },
 
 
     email: {
@@ -30,16 +30,14 @@ module.exports = (sequelize, DataTypes) => {
 
     password: {
       type: DataTypes.STRING,
-
       // security measures
-      // must contain a number, an uppercase letter, a lowercase letter, and be between 5-15 chars long
+      // must contain a number, an uppercase letter, a lowercase letter, and be between 5-20 chars long
       validate: {
         isDecimal: true,          // checks for any numbers
         isUppercase: true,        // checks for uppercase
         isLowercase: true,        // checks for lowercase
-        len: [5,15],              // only allow values with length between 5 and 15
+        len: [5, 20],              // only allow values with length between 5 and 20
         notNull: true,            // won't allow null
-
       }
     },
 
@@ -64,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function (models) {
 
     // has timesheet which is identified by its fk
-    hasOne(models.Timesheet, {
+    hasMany(models.Timesheet, {
 
       foreignKey:
       // 'timesheet_id',

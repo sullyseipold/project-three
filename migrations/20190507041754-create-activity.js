@@ -8,14 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      starttime: {
+      startdate: {
         type: Sequelize.DATE
+        // defaultValue: Sequelize.NOW,
       },
-      endtime: {
+      enddate: {
         type: Sequelize.DATE
       },
       type: {
         type: Sequelize.STRING
+      },
+      actualhours: {
+        from: {
+          $between: [startdate, enddate]
+        }
       },
       createdAt: {
         allowNull: false,
