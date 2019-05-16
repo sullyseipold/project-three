@@ -67,7 +67,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey:
       // 'timesheet_id',
       {
-        allowNull: true
+        allowNull: false
       }
     });
   };

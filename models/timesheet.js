@@ -29,12 +29,16 @@ module.exports = (sequelize, DataTypes) => {
 
     belongsTo(models.User, {
       as: 'timesheet',
+      onDelete: "CASCADE",
+      foreignKey: {
+        allowNull: false
+      }
       // foreignKey: 'timesheet_id'
     });
 
     // has activities 
     hasMany(models.Activity, {
-      allowNull: false,
+      allowNull: true
       // foreignKey: 'activity_id'
     })
 

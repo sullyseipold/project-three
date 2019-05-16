@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const hourtype = sequelize.define('hourtype', {
+  const Hourtype = sequelize.define('hourtype', {
     // category recording options (reg hours, overtime, holiday, etc)
     // each hourtype has a starttime and endtime
     // type: DataTypes.STRING,
@@ -17,15 +17,19 @@ module.exports = (sequelize, DataTypes) => {
       vacation: "Vacation Hours",
     },
 
-    // defaultValue: reg
+    defaultValue: "Regular Hours",
+    allowNull: true
 
-  }, {});
-  hourtype.associate = function (models) {
+  }, {
+    sequelize,
+    modelName: 'hourtype'
+  });
+  Hourtype.associate = function (models) {
     belongsTo(models.Activity, {
       foreignKey: {
         allowNull: false
       }
     })
   };
-  return hourtype;
+  return Hourtype;
 };

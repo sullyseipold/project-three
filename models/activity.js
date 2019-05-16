@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     actualhours: {
       from: {
         $between: [startdate, enddate]
-      }
+      },
+      allowNull: true
     },
 
   }, {
