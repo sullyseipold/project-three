@@ -7,6 +7,12 @@ import {
 import AppHeader from './components/AppHeader';
 import Home from './pages/home';
 
+// App.js
+import Auth from './Auth/Auth.js';
+
+const auth = new Auth();
+auth.login();
+
 const styles = theme => ({
   main: {
     padding: 3 * theme.spacing.unit,
