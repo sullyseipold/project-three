@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     activity_id: DataTypes.INTEGER
   }, {});
   Hourtype.associate = function(models) {
+    belongsTo(models.Activity);
     // associations can be defined here
   };
   return Hourtype;
