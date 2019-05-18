@@ -1,24 +1,32 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Books from "./pages/Books";
-import Detail from "./pages/Detail";
-import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
+import React, { Fragment } from 'react';
+import {
+  CssBaseline,
+  withStyles,
+} from '@material-ui/core';
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Nav />
-        <Switch>
-          <Route exact path="/" component={Books} />
-          <Route exact path="/books" component={Books} />
-          <Route exact path="/books/:id" component={Detail} />
-          <Route component={NoMatch} />
-        </Switch>
-      </div>
-    </Router>
-  );
-}
+import AppHeader from './components/AppHeader';
+import Home from './pages/home';
+import Auth from './Auth/Auth.js';
 
-export default App;
+const auth = new Auth();
+auth.login();
+const styles = theme => ({
+  main: {
+    padding: 3 * theme.spacing.unit,
+    [theme.breakpoints.down('xs')]: {
+      padding: 2 * theme.spacing.unit,
+    },
+  },
+});
+
+const App = ({ classes }) => (
+  <Fragment>
+    <CssBaseline />
+    <AppHeader />
+    <main className={classes.main}>
+      <Home />
+    </main>
+  </Fragment>
+);
+
+export default withStyles(styles)(App);
