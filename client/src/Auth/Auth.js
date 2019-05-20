@@ -1,5 +1,7 @@
 import auth0 from 'auth0-js';
-import { AUTH_CONFIG } from './auth0-variables';
+import {
+  AUTH_CONFIG
+} from './auth0-variables';
 import history from '../history';
 
 export default class Auth {
@@ -8,6 +10,7 @@ export default class Auth {
   expiresAt;
   userProfile;
   scopes;
+  tokenRenewalTimeout;
   requestedScopes = 'openid profile read:messages write:messages';
 
   auth0 = new auth0.WebAuth({
@@ -29,6 +32,7 @@ export default class Auth {
     this.getIdToken = this.getIdToken.bind(this);
     this.renewSession = this.renewSession.bind(this);
     this.getProfile = this.getProfile.bind(this);
+    this.scheduleRenewal();
   }
 
   login() {
@@ -47,6 +51,24 @@ export default class Auth {
     });
   }
 
+
+
+  scheduleRenewal() {
+    let expiresAt = this.expiresAt;
+    const timeout = expiresAt - Date.now();
+    if (timeout > 0) {
+      this.tokenRenewalTimeout = setTimeout(() => {
+        this.renewSession();
+      }, timeout);
+    }
+  }
+
+
+  getExpiryDate() {
+    return JSON.stringify(new Date(this.expiresAt));
+  }
+
+
   getAccessToken() {
     return this.accessToken;
   }
@@ -59,6 +81,7 @@ export default class Auth {
     // Set isLoggedIn flag in localStorage
     localStorage.setItem('isLoggedIn', 'true');
 
+
     // Set the time that the access token will expire at
     let expiresAt = (authResult.expiresIn * 1000) + new Date().getTime();
     this.accessToken = authResult.accessToken;
@@ -68,21 +91,25 @@ export default class Auth {
     // Set the users scopes
     this.scopes = authResult.scope || this.requestedScopes || '';
 
+    this.scheduleRenewal();
+
     // navigate to the home route
     history.replace('/home');
   }
 
   renewSession() {
     this.auth0.checkSession({}, (err, authResult) => {
-       if (authResult && authResult.accessToken && authResult.idToken) {
-         this.setSession(authResult);
-       } else if (err) {
-         this.logout();
-         console.log(err);
-         alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
-       }
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.setSession(authResult);
+      } else if (err) {
+        this.logout();
+        console.log(err);
+        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+      }
     });
   }
+
+
 
   getProfile(cb) {
     this.auth0.client.userInfo(this.accessToken, (err, profile) => {
@@ -104,6 +131,10 @@ export default class Auth {
 
     // Remove user profile
     this.userProfile = null;
+
+    
+    clearTimeout(this.tokenRenewalTimeout);
+
 
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
@@ -127,4 +158,5 @@ export default class Auth {
     const grantedScopes = this.scopes.split(' ');
     return scopes.every(scope => grantedScopes.includes(scope));
   }
+
 }
