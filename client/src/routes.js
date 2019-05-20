@@ -6,6 +6,8 @@ import Callback from './Callback/Callback';
 import Auth from './Auth/Auth';
 import history from './history';
 
+import Profile from './Profile/Profile';
+
 const auth = new Auth();
 
 const handleAuthentication = ({location}) => {
@@ -20,6 +22,9 @@ export const makeMainRoutes = () => {
         <div>
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
           <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
+
+          <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} />
+
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} /> 
