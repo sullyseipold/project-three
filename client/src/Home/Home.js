@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
   login() {
@@ -11,7 +12,9 @@ class Home extends Component {
         {
           isAuthenticated() && (
               <h4>
-                You are logged in!
+                You are logged in! You can now view your{' '}
+                <Link to="profile">profile area</Link>
+                .
               </h4>
             )
         }
@@ -19,10 +22,12 @@ class Home extends Component {
           !isAuthenticated() && (
               <h4>
                 You are not logged in! Please{' '}
-                <a style={{ cursor: 'pointer' }}
-                  onClick={this.login.bind(this)}>
+                <button
+                  style={{ cursor: 'pointer' }}
+                  onClick={this.login.bind(this)}
+                >
                   Log In
-                </a>
+                </button>
                 {' '}to continue.
               </h4>
             )

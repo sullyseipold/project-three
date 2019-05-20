@@ -3,6 +3,7 @@ import { Navbar, Button } from 'react-bootstrap';
 import './App.css';
 
 class App extends Component {
+  // Route handler - Login state
   goTo(route) {
     this.props.history.replace(`/${route}`)
   }
@@ -16,6 +17,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // If isLoggedIn, renew session
     const { renewSession } = this.props.auth;
 
     if (localStorage.getItem('isLoggedIn') === 'true') {
@@ -31,11 +33,12 @@ class App extends Component {
         <Navbar fluid>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">Auth0 - React</a>
+              <h1>HotTime</h1>
             </Navbar.Brand>
             <Button
               bsStyle="primary"
               className="btn-margin"
+              
               onClick={this.goTo.bind(this, 'home')}
             >
               Home
