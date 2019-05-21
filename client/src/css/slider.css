@@ -1,0 +1,36 @@
+
+ .u-slider-time {
+	 position: relative;
+	 display: inline-block;
+	 background-color: black;
+	 border-radius: 3px;
+	 height: 2;
+	 width: 100%;
+	 cursor: pointer;
+}
+ .u-slider-time .value {
+	 position: absolute;
+	 background-color: black;
+	 border-radius: 3px;
+	 top: 0;
+	 height: 100%;
+}
+ .u-slider-time .handle {
+	 position: absolute;
+	 width: 2;
+	 height: 2;
+}
+ .u-slider-time .handle:after {
+	 position: relative;
+	 display: block;
+	 content: '';
+	 top: 2;
+	 left: 2;
+	 width: 2;
+	 height: 2;
+	 background-color :blue;
+	 border: 3px solid ;
+	 border-radius: 50%;
+	 cursor: pointer;
+}
+ 
