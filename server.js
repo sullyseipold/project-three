@@ -22,9 +22,9 @@ var syncOptions = {
 };
 
 // If running on heroku, set syncOptions.force to true
-if (process.env.NODE_ENV === "production") {
-  syncOptions.force = true;
-}
+// if (process.env.NODE_ENV === "production") {
+//   syncOptions.force = true;
+// }
 
 db.sequelize.sync(syncOptions).then(function () {
 

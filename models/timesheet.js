@@ -1,16 +1,24 @@
-'use strict';
-module.exports = (sequelize, DataTypes) => {
+module.exports = function(sequelize, DataTypes) {
   const Timesheet = sequelize.define('Timesheet', {
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
-    user_id: DataTypes.INTEGER
-  }, {
-    sequelize, modelName: 'timesheet'
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    startDate: {
+      type: DataTypes.DATE
+    },
+    endDate: {
+      type: DataTypes.DATE
+    }
   });
+
   Timesheet.associate = function(models) {
-    belongsTo(models.User);
-    // associations can be defined here
-    // need to sync
+    Timesheet.belongsTo(models.User, {
+      foreignKey: {
+        allowNull:  false
+      }
+    });
   };
   return Timesheet;
 };
