@@ -1,4 +1,4 @@
-import history from '../history';
+import history from '../../utils/history';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 
@@ -23,6 +23,8 @@ export default class Auth {
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getIdToken = this.getIdToken.bind(this);
     this.renewSession = this.renewSession.bind(this);
+    this.getProfile = this.getProfile.bind(this);
+    this.scheduleRenewal();
   }
 
   login() {
@@ -39,6 +41,21 @@ export default class Auth {
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
+  }
+
+  scheduleRenewal() {
+    let expiresAt = this.expiresAt;
+    const timeout = expiresAt - Date.now();
+    if (timeout > 0) {
+      this.tokenRenewalTimeout = setTimeout(() => {
+        this.renewSession();
+      }, timeout);
+    }
+  }
+
+
+  getExpiryDate() {
+    return JSON.stringify(new Date(this.expiresAt));
   }
 
   getAccessToken() {
@@ -72,6 +89,15 @@ export default class Auth {
          console.log(err);
          alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
        }
+    });
+  }
+
+  getProfile(cb) {
+    this.auth0.client.userInfo(this.accessToken, (err, profile) => {
+      if (profile) {
+        this.userProfile = profile;
+      }
+      cb(err, profile);
     });
   }
 
