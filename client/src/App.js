@@ -40,6 +40,13 @@ class App extends Component {
             >
               Home
             </Button>
+            <Button
+              bsStyle="primary"
+              className="btn-margin"
+              onClick={this.goTo.bind(this, 'timecard')}
+            >
+              Time Card
+            </Button>
             {
               !isAuthenticated() && (
                   <Button
