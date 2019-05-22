@@ -6,6 +6,7 @@ import Callback from './components/Callback/Callback';
 import Auth from './components/Auth/Auth';
 import Profile from './components/Profile/Profile'
 import history from './utils/history';
+import TimeCard from './pages/TimeCard/TimeCard';
 
 const auth = new Auth();
 
@@ -22,6 +23,7 @@ export const makeMainRoutes = () => {
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
           <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
           <Route path="/profile" render={(props) => <Profile auth={auth} {...props} />} />
+          <Route path="/timecard" render={(props) => <TimeCard auth={auth} {...props} />} />
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} /> 
