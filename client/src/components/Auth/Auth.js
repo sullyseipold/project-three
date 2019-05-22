@@ -6,13 +6,17 @@ export default class Auth {
   accessToken;
   idToken;
   expiresAt;
+  userProfile;
+  scopes;
+  requestedScopes = 'openid profile read:messages write:messages';
 
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
     redirectUri: AUTH_CONFIG.callbackUrl,
+    audience: AUTH_CONFIG.apiUrl,
     responseType: 'token id_token',
-    scope: 'openid'
+    scope: this.requestedScopes
   });
 
   constructor() {
@@ -20,11 +24,11 @@ export default class Auth {
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.userHasScopes = this.userHasScopes.bind(this);
     this.getAccessToken = this.getAccessToken.bind(this);
     this.getIdToken = this.getIdToken.bind(this);
     this.renewSession = this.renewSession.bind(this);
     this.getProfile = this.getProfile.bind(this);
-    this.scheduleRenewal();
   }
 
   login() {
@@ -76,6 +80,9 @@ export default class Auth {
     this.idToken = authResult.idToken;
     this.expiresAt = expiresAt;
 
+    // Set the users scopes
+    this.scopes = authResult.scope || this.requestedScopes || '';
+
     // navigate to the home route
     history.replace('/home');
   }
@@ -107,6 +114,12 @@ export default class Auth {
     this.idToken = null;
     this.expiresAt = 0;
 
+    // Remove user scopes
+    this.scopes = null;
+
+    // Remove user profile
+    this.userProfile = null;
+
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
 
@@ -123,5 +136,10 @@ export default class Auth {
     // access token's expiry time
     let expiresAt = this.expiresAt;
     return new Date().getTime() < expiresAt;
+  }
+
+  userHasScopes(scopes) {
+    const grantedScopes = this.scopes.split(' ');
+    return scopes.every(scope => grantedScopes.includes(scope));
   }
 }

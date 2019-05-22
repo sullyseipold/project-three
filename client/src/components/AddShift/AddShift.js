@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 class AddShift extends Component {
   render() {
 
@@ -7,10 +8,9 @@ class AddShift extends Component {
 
     return (
       <div className="container">
-        <button className="button">
-          <h1>Add Shift</h1>
-
-        </button>
+        <h1>
+          Add Shift
+        </h1>
       </div>
     );
   }

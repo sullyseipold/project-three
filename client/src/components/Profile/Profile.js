@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Panel, ControlLabel, Glyphicon } from 'react-bootstrap';
+import { Panel, ControlLabel, Glyphicon, ButtonToolbar, Button } from 'react-bootstrap';
 import './Profile.css';
-import AddShift from '../AddShift/AddShift';
+
+import { Link } from 'react-router-dom';
+
 
 class Profile extends Component {
   componentWillMount() {
@@ -22,7 +24,18 @@ class Profile extends Component {
         <div className="profile-area">
           <h1>{profile.name}</h1>
           <Panel header="Profile">
-          <AddShift />
+
+        <ButtonToolbar>
+
+        <Button variant="primary">
+          <Link to="addshift">Add Shift</Link>
+        </Button>
+
+        <Button variant="primary">
+          <Link to="viewtimesheet">View Timesheet</Link>
+        </Button>
+
+        </ButtonToolbar>
             <img src={profile.picture} alt="profile" />
             <div>
               <ControlLabel><Glyphicon glyph="user" /> Nickname</ControlLabel>
