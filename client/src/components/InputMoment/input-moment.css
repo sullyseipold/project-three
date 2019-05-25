@@ -15,7 +15,7 @@
 }
  .m-input-moment {
 	 display: inline-block;
-	 width: 330px;
+	 width: 100%;
 	 padding: 12px 15px;
 	 border-radius: 3px;
 	 border: 1px solid ;
@@ -25,25 +25,25 @@
 	 display: inline-block;
 	 margin-bottom: 4px;
 }
- .m-input-moment .options button {
+ .m-input-moment .options Button {
 	 float: left;
 	 width: 50%;
-	 color: blueviolet;
+	 /* color: blueviolet; */
 	 text-align: center;
 	 font-size: 16px;
 	 padding: 7px;
 	 border: 1px solid ;
 	 border-radius: 3px;
 }
- .m-input-moment .options button:first-child {
+ .m-input-moment .options Button:first-child {
 	 border-top-right-radius: 0;
 	 border-bottom-right-radius: 0;
 }
- .m-input-moment .options button:last-child {
+ .m-input-moment .options Button:last-child {
 	 border-top-left-radius: 0;
 	 border-bottom-left-radius: 0;
 }
- .m-input-moment .options button.is-active {
+ .m-input-moment .options Button.is-active {
 	 color: #ffffff;
 	 background-color: burlywood;
 }

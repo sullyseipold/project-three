@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Table } from 'react-bootstrap';
 import cx from 'classnames';
 import range from 'lodash/range';
 import chunk from 'lodash/chunk';
@@ -25,6 +26,7 @@ export default class Calendar extends Component {
     if (prevMonth) m.subtract(1, 'month');
     if (nextMonth) m.add(1, 'month');
 
+    console.log(m);
     m.date(i);
 
     this.props.onChange(m);
@@ -39,6 +41,7 @@ export default class Calendar extends Component {
     e.preventDefault();
     this.props.onChange(this.props.moment.add(1, 'month'));
   };
+
 
   render() {
     const m = this.props.moment;
@@ -65,7 +68,7 @@ export default class Calendar extends Component {
           </button>
         </div>
 
-        <table>
+        <Table>
           <thead>
             <tr>
               {weeks.map((w, i) => <td key={i}>{w}</td>)}
@@ -87,7 +90,7 @@ export default class Calendar extends Component {
               </tr>
             )}
           </tbody>
-        </table>
+        </Table>
       </div>
     );
   }

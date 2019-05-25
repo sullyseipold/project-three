@@ -1,6 +1,7 @@
 import history from '../../utils/history';
+import API from '../../utils/API';
 import auth0 from 'auth0-js';
-import { AUTH_CONFIG } from './auth0-variables';
+// import { AUTH_CONFIG } from './auth0-variables';
 
 
 export default class Auth {
@@ -12,12 +13,12 @@ export default class Auth {
   requestedScopes = 'openid profile read:messages write:messages';
 
   auth0 = new auth0.WebAuth({
-    domain: AUTH_CONFIG.domain,
-    clientID: AUTH_CONFIG.clientId,
-    redirectUri: AUTH_CONFIG.callbackUrl,
-    audience: AUTH_CONFIG.apiUrl,
+    domain: 'dev-b23leygb.auth0.com',
+    clientID: 'j7rVTQatqbdB5p4DB7veYJS5aY7CzGQG',
+    redirectUri: 'http://localhost:3000/callback',
+    audience: 'http://localhost:3001/api',
     responseType: 'token id_token',
-    scope: this.requestedScopes
+    scope: 'openid profile read:messages'
   });
 
   constructor() {
@@ -40,6 +41,7 @@ export default class Auth {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
+
       } else if (err) {
         history.replace('/home');
         console.log(err);
@@ -80,16 +82,37 @@ export default class Auth {
        } else if (err) {
          this.logout();
          console.log(err);
-         alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+        //  alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
        }
     });
   }
 
   getProfile(cb) {
     this.auth0.client.userInfo(this.accessToken, (err, profile) => {
-      if (profile) {
+      // if (profile) {
         this.userProfile = profile;
+        console.log(profile)
+
+        var email = profile.nickname;
+        var estring = email + '@gmail.com';
+
+        if (profile.given_name && profile.family_name) {
+        var user = {
+          firstName: profile.given_name,
+          lastName: profile.family_name,
+          email: estring
+        }
+      } else {
+
+        user = {
+          email: profile.name
+        }
       }
+
+        console.log(user);
+
+        API.saveUser(user);
+      // }
       cb(err, profile);
     });
   }

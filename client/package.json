@@ -2,15 +2,20 @@
     "name": "hottime",
     "version": "0.2.0",
     "private": true,
+    "proxy": "http://localhost:3001/",
     "devDependencies": {
         "react-scripts": "^2.1.8"
     },
     "dependencies": {
         "auth0-js": "^9.0.0",
-        "bootstrap": "^3.3.7",
+        "axios": "^0.18.0",
+        "bootstrap": "^3.4.1",
+        "rc-calendar": "^9.13.4",
+        "rc-time-picker": "^3.6.6",
         "react": "^16.8.6",
-        "react-bootstrap": "^0.31.2",
+        "react-bootstrap": "^0.31.5",
         "react-dom": "^16.8.6",
+        "react-input-slider": "^5.0.14",
         "react-router": "^5.0.0",
         "react-router-dom": "^5.0.0"
     },

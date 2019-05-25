@@ -16,13 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     },
     activityType: {
       type: DataTypes.STRING,
-      allowNull:  false
+      allowNull:  true
     }
   }, {});
   Activity.associate = function(models) {
     Activity.belongsTo(models.Timesheet, {
       foreignKey: {
-        allowNull:  false
+        allowNull:  true
       }
     });
   };

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Panel, ControlLabel, Glyphicon } from 'react-bootstrap';
 import './Profile.css';
-import AddShift from '../AddShift/AddShift';
-
 class Profile extends Component {
+
   componentWillMount() {
     this.setState({ profile: {} });
     const { userProfile, getProfile } = this.props.auth;
@@ -13,16 +12,18 @@ class Profile extends Component {
       });
     } else {
       this.setState({ profile: userProfile });
-    }
+       }
   }
+
   render() {
     const { profile } = this.state;
+
+
     return (
       <div className="container">
         <div className="profile-area">
           <h1>{profile.name}</h1>
           <Panel header="Profile">
-          <AddShift />
             <img src={profile.picture} alt="profile" />
             <div>
               <ControlLabel><Glyphicon glyph="user" /> Nickname</ControlLabel>

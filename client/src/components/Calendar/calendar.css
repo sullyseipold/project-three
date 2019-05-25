@@ -1,8 +1,16 @@
+.light-teal {
+    background-color: #038B95;
+    color: white;
+}
 
- .m-calendar {
+/* .light-blue {
+
+} */
+
+.m-calendar {
     display: inline-block;
 }
-.m-calendar table {
+.m-calendar Table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
@@ -12,11 +20,11 @@
     padding: 8px 0;
     text-align: center;
     cursor: pointer;
-    color: blue;
+    /* color: blue; */
     border: 1px solid ;
 }
 .m-calendar thead td {
-    color: blue;
+    /* color: blue; */
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
@@ -26,12 +34,12 @@
     color: #666666;
 }
 .m-calendar tbody td:hover {
-    background: yellow;
+    /* background: yellow; */
     border-color: blanchedalmond;
-    color: blue;
+    /* color: blue; */
 }
 .m-calendar .current-day {
-    color: blue;
+    /* color: blue; */
     font-weight: bold;
 }
 .m-calendar .prev-month, .m-calendar .next-month {
@@ -66,5 +74,5 @@
     float: right;
 }
 .m-calendar .toolbar .current-date {
-    color: blue;
+    /* color: blue; */
 }
